@@ -1,28 +1,21 @@
-def main(gl_name):
-    global f_res
-    with open(gl_name, "w", encoding='utf-8') as f_res:
-        f_res.write('2.txt\n')
-        wrt('2.txt')
-        f_res.write('1.txt\n')
-        wrt('1.txt')
-        f_res.write('3.txt\n')
-        wrt('3.txt')
-def wrt(file):
-    with open(file, encoding='utf-8') as f:
-        len_f=str(len(f.readlines()))
-        f.seek(0)
-        list=f.readlines()
-        f_res.write(len_f)
-        f_res.write("\n")
-        for file in list:
-            f_res.write(file)
-main(input('Задайте имя файла с разрешением. Пример: result.txt. Ответ напишите снизу\n'))
-            
+def main(name):
+    files=['1.txt', '2.txt', '3.txt']
+    inf_f={}
+    for file in files:
+        with open(file, encoding='utf-8') as f:
+            supp_inf_f={file : [len(f.readlines())]}
+            f.seek(0)
+            supp_inf_f[file].append(f.readlines())
+            inf_f.update(supp_inf_f)
+    sorted_dict=dict(sorted(inf_f.items(), key=lambda x: x[1][1], reverse=True))
+    with open(name, 'w', encoding='utf-8') as wr_f:
+        for key in sorted_dict.keys():
+            wr_f.write(key)
+            wr_f.write('\n')
+            wr_f.write(str(sorted_dict[key][0]))
+            wr_f.write('\n')
+            for element in sorted_dict[key][1]:
+                wr_f.write(element)
+main(input('Введите название файла: '))
 
-        
-        
-                    
 
-    
-
-        
